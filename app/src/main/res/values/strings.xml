@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TerritoryRx</string>
+    <string name="dashboard_title">Territory Dashboard</string>
+    <string name="planner_title">Route Planner</string>
+    <string name="directory_title">HCP Directory</string>
+    <string name="ai_chat_title">Gemini Territory Chat</string>
+    <string name="import_settings_title">Import &amp; Settings</string>
+    <string name="import_title">Excel &amp; CSV Import</string>
+    <string name="settings_title">Settings &amp; Cloud</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="load_sample_west_xlsx">Load Sample West.xlsx</string>
+    <string name="import_excel_workbook">Import Excel / CSV</string>
+    <string name="optimize_day">Optimize Day</string>
+    <string name="optimize_week">Optimize Week</string>
+    <string name="sync_cloud">Sync Cloud</string>
+</resources>

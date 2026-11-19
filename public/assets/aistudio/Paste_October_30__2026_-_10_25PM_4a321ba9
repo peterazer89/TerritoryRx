@@ -1,0 +1,1359 @@
+# TERRITORY RX — COMPLETE ANDROID APPLICATION IMPROVEMENT MASTER PROMPT
+## UI/UX Redesign + AI Excel Intelligence + HCP Management + Intelligent Route Optimization
+
+### 1. ROLE AND MISSION
+
+Act as a principal Android architect, senior Kotlin engineer, UI/UX designer, AI integration specialist, operations research engineer, geospatial routing specialist, database architect, and software QA engineer.
+
+You are working on my existing Android application:
+
+**Territory Rx — AI-Powered HCP Territory Planner**
+
+I am a pharmaceutical medical representative. I need this application to organize my territory, manage my HCP database, understand my Excel files, track quarterly visit requirements, and generate realistic daily and weekly visit plans.
+
+I am providing screenshots of the current application.
+
+Your task is to significantly improve the existing application while preserving working functionality, existing HCP records, visit history, and useful existing code.
+
+**IMPORTANT: Do not rebuild the application from scratch. Inspect the existing codebase first and improve it incrementally.**
+
+Do not stop at UI mockups or recommendations. Implement, compile, test, and validate the actual application.
+
+---
+
+# PART 1 — CONFIRMED BUSINESS SETTINGS
+
+Use the following as the authoritative initial configuration.
+
+| Parameter | Confirmed setting |
+|---|---|
+| App name | Territory Rx |
+| Default theme | System |
+| Manual theme options | Light / Dark / System |
+| Weekend days | Thursday, Friday, Saturday |
+| First day of week | Independently configurable |
+| Daily HCP target | 8 |
+| Default visit duration | Exactly 15 minutes |
+| Individual visit duration | Manual override allowed |
+| Starting point | Home |
+| Maximum duty span | 480 minutes |
+| Split shifts | Not allowed |
+| Same-location scheduling | Sequential |
+| Same-location transition buffer | 0 minutes |
+| Working hours | Flexible according to HCP availability |
+| Planning | Daily and weekly |
+| Excel format | XLSX and CSV |
+| Offline access | Required |
+
+These settings must be configurable.
+
+For fresh installations, use the values above.
+
+For existing installations, preserve previously customized settings unless the user explicitly chooses to reset them.
+
+---
+
+# PART 2 — COMPLETE UI/UX REDESIGN
+
+## 2.1 Design direction
+
+The current application has a useful structure, but the interface needs a more professional, modern, clean, and friendly appearance.
+
+Use a **Modern Premium Productivity App** design language.
+
+The desired appearance should feel like a professional business productivity application, not a complicated technical dashboard.
+
+### Visual direction
+
+- Clean, minimal, professional interface.
+- Light theme as the visual reference.
+- System theme as the default application setting.
+- Dark theme as an alternative.
+- White or very light neutral backgrounds.
+- Deep navy text.
+- Blue primary actions.
+- Teal success indicators.
+- Amber warnings.
+- Red critical errors.
+- Subtle shadows and borders.
+- Consistent spacing.
+- Carefully selected icons.
+- Clear visual hierarchy.
+
+Avoid:
+- Excessively dark backgrounds as the only theme.
+- Too many gradients.
+- Excessive rounded cards.
+- Oversized text.
+- Excessive decorative emojis.
+- Too many borders.
+- Dense information blocks.
+- Unnecessary animation.
+- Excessive scrolling caused by poor information hierarchy.
+
+Use Material 3 design principles and centralized design tokens.
+
+## 2.2 Typography
+
+Replace the current fonts with:
+
+**Primary font: Inter**
+
+Alternative: Manrope.
+
+Requirements:
+
+- Bundle fonts locally.
+- Define a consistent typography scale.
+- Use appropriate weights.
+- Use readable sizes for mobile devices.
+- Use tabular numerals for times, distances, and visit counts.
+- Make HCP names and appointment times easy to scan.
+- Support Arabic and English.
+- Use an appropriate Arabic fallback such as Noto Sans Arabic.
+- Support right-to-left text where appropriate.
+- Prevent text clipping, wrapping, and overflow.
+
+Define reusable styles for:
+
+- Screen titles.
+- Section titles.
+- Card headings.
+- Body text.
+- Secondary descriptions.
+- Labels.
+- Captions.
+- Numerical statistics.
+
+Do not define different typography styles independently for every screen.
+
+## 2.3 Theme system
+
+Implement three appearance options:
+
+1. System.
+2. Light.
+3. Dark.
+
+Default: System.
+
+The System option must follow Android's current appearance automatically.
+
+Changing the theme must update all screens without requiring an application restart.
+
+Use centralized color tokens and theme-aware reusable components.
+
+## 2.4 Navigation
+
+Preserve the existing four main destinations:
+
+- Planner.
+- HCPs.
+- Import.
+- Settings.
+
+Improve the bottom navigation with:
+- Consistent icons.
+- Clear selected state.
+- Readable labels.
+- Appropriate touch targets.
+- Responsive behavior.
+
+Do not allow bottom navigation to cover scrollable content.
+
+---
+
+# PART 3 — PLANNER SCREEN REDESIGN
+
+Reorganize the Planner screen into a clear hierarchy.
+
+## 3.1 Header
+
+Display:
+
+- Territory Rx branding.
+- Planning date.
+- Theme-aware appearance.
+- Important notifications when necessary.
+
+## 3.2 Planning mode
+
+Provide:
+
+- Daily Route.
+- Weekly Plan.
+
+Make the selected mode obvious.
+
+## 3.3 Main actions
+
+Provide two prominent actions:
+
+- Generate AI Plan.
+- Re-optimize.
+
+The first action generates a new plan using the optimization engine.
+
+The second recalculates the selected plan based on updated traffic, availability, or manual changes.
+
+## 3.4 Planning parameters
+
+Organize planning parameters into collapsible sections:
+
+- Working time.
+- Daily visit target.
+- Active zones.
+- HCP priorities.
+- Excluded areas or clinics.
+- Additional optimization preferences.
+
+Avoid placing every setting in one oversized card.
+
+## 3.5 AI planning insights
+
+Provide a compact section showing:
+
+- Planning recommendations.
+- Coverage opportunities.
+- Important schedule constraints.
+- Data-quality warnings.
+- Reasons for prioritizing specific HCPs.
+
+Allow the user to expand the section for detailed explanations.
+
+## 3.6 Route alternatives
+
+Display up to three meaningful alternatives:
+
+- Plan A.
+- Plan B.
+- Plan C.
+
+Only show alternatives that are genuinely different and feasible.
+
+Provide a comparison screen showing:
+
+- Number of HCP visits.
+- Unique HCPs covered.
+- Total travel time.
+- Total distance.
+- Waiting time.
+- Duty span.
+- Coverage benefit.
+- High-priority HCPs included.
+- Traffic-data freshness.
+
+## 3.7 Selected route summary
+
+Display:
+
+- Planned visits.
+- Completed visits.
+- Remaining visits.
+- Total distance.
+- Estimated driving time.
+- Waiting time.
+- Total duty span.
+- Estimated finish time.
+- Traffic-data status.
+
+## 3.8 Visit timeline
+
+Each visit card must display:
+
+- Stop number.
+- HCP name.
+- Specialty.
+- Selected clinic.
+- Zone.
+- Departure time.
+- Estimated travel time.
+- Arrival time.
+- Visit start and end.
+- Visit duration.
+- HCP priority.
+- Coverage status.
+- Location verification status.
+
+Provide quick actions:
+
+- Complete visit.
+- Cancel visit.
+- Mark not completed.
+- Open Maps.
+- Move up.
+- Move down.
+- Lock appointment.
+- Edit duration.
+- Change clinic.
+
+After a manual modification, revalidate the entire route.
+
+---
+
+# PART 4 — HCP DIRECTORY REDESIGN
+
+Create clean, compact, informative HCP cards.
+
+Each card should display:
+
+- HCP name.
+- Specialty.
+- Number of clinics.
+- Completed visits versus quarterly target.
+- Remaining visits.
+- Coverage status.
+- Last completed visit, if known.
+- Main clinic zone.
+- Next available clinic window, when verified.
+
+Use a compact progress bar for quarterly coverage.
+
+Allow users to expand an HCP card to see:
+
+- Clinic 1.
+- Clinic 2.
+- Other clinic locations.
+- Maps links.
+- Weekly availability.
+- Visit history.
+- Quarterly coverage.
+- Editable HCP information.
+
+Provide search and filters:
+
+- Name.
+- Specialty.
+- Zone.
+- Overdue.
+- High coverage risk.
+- Remaining visits.
+- Missing data.
+- Unverified schedules.
+- Active or inactive HCPs.
+
+Allow adding, editing, and deactivating HCPs.
+
+Do not permanently delete important visit history when an HCP is deactivated.
+
+---
+
+# PART 5 — EXCEL IMPORT AND AI-POWERED DATA UNDERSTANDING
+
+This is one of the most important modules.
+
+I want the app to understand my existing Excel workbook, extract the information, normalize it, and populate the correct HCP cards automatically.
+
+The app must support my actual workbook structure without forcing me to rename columns or rebuild my territory database.
+
+## 5.1 Existing workbook structure
+
+The current `West.xlsx` workbook contains these columns:
+
+| Column | Meaning |
+|---|---|
+| target_id | Stable HCP identifier |
+| HCP Name | HCP name |
+| Specialty | Medical specialty |
+| Clinic 1 Zone | First clinic zone |
+| Clinic 1 gps location | First clinic location or Maps reference |
+| Visiting time in Clinic 1 | First clinic availability |
+| Clinic 2 Zone | Second clinic zone |
+| Clinic 2 Location | Second clinic location or Maps reference |
+| Visiting time in Clinic 2 | Second clinic availability |
+| Frequency per Quarter | Required quarterly visits |
+
+Support these columns and common variations.
+
+Column order must not matter.
+
+Column names must be matched case-insensitively and tolerate minor variations.
+
+If automatic mapping is uncertain, display a manual mapping interface.
+
+Support XLSX as the primary format and CSV as an additional format.
+
+Use Android Storage Access Framework for file selection.
+
+## 5.2 Excel import workflow
+
+Implement:
+
+1. Select workbook.
+2. Detect worksheets.
+3. Select the relevant worksheet.
+4. Read column headers.
+5. Automatically map fields.
+6. Read HCP rows.
+7. Identify individual HCP records.
+8. Identify multiple clinics.
+9. Interpret availability schedules.
+10. Process location references.
+11. Validate data.
+12. Use AI assistance where required.
+13. Display import preview.
+14. Allow corrections.
+15. Confirm import.
+16. Save normalized data locally.
+17. Synchronize when connectivity is available.
+
+## 5.3 AI data interpretation
+
+Use a hybrid approach:
+
+- Deterministic parsing for clear structured information.
+- AI interpretation for ambiguous or unfamiliar information.
+- Validation rules for every extracted field.
+- User confirmation for uncertain or consequential changes.
+
+AI should understand:
+
+- HCP identity.
+- Specialty.
+- Clinic zone.
+- Clinic location.
+- Google Maps references.
+- Visiting weekdays.
+- Visiting time windows.
+- Quarterly frequency.
+- Multiple clinics belonging to one HCP.
+
+Preserve the original Excel values.
+
+For every interpreted field, store:
+
+- Original value.
+- Normalized value.
+- Extraction source.
+- Confidence or validation status.
+- Confirmation status.
+
+Do not silently turn uncertain AI interpretations into confirmed data.
+
+Do not send the entire workbook to an AI service when only one ambiguous field requires interpretation.
+
+## 5.4 Availability schedule interpretation
+
+Examples of schedules in the workbook:
+
+- `Saturday and Monday 2-6 PM`
+- `Evening from 8-9 PM EVERY DAY`
+- `Daily 8:30-10 PM except Monday and Friday`
+- `Sat, Mon, Wed, Thu 4-10 PM`
+- `Sunday and Tuesday 7 PM-10 PM`
+
+Convert them into structured weekly availability rules.
+
+Recognize:
+
+- Full weekday names.
+- Abbreviations.
+- Multiple weekdays.
+- AM and PM.
+- 24-hour time.
+- Daily schedules.
+- Excluded weekdays.
+- Multiple daily windows.
+- Common punctuation and spacing variations.
+
+Flag ambiguous expressions such as `8-10` without sufficient AM/PM context.
+
+Never guess when the meaning is uncertain.
+
+Preserve original schedule text and allow manual corrections.
+
+Build a weekly calendar editor for clinic availability.
+
+## 5.5 Multiple clinics per HCP
+
+One HCP can have multiple clinics with different locations and schedules.
+
+Use a separate Clinic database entity linked to the HCP.
+
+Each clinic must have:
+
+- Clinic ID.
+- HCP ID.
+- Clinic name or sequence.
+- Zone.
+- Original location text.
+- Original Google Maps URL.
+- Verified coordinates.
+- Availability rules.
+- Optional clinic-specific duration.
+- Verification status.
+
+Quarterly frequency belongs to the HCP, not automatically to each clinic.
+
+The optimizer should select the appropriate clinic for each visit.
+
+Do not count visiting two clinics belonging to one HCP as two separate HCP visits unless explicitly configured and permitted by the business rules.
+
+## 5.6 HCP card automatic population
+
+After confirmed import, automatically populate the HCP Directory.
+
+Example:
+
+HCP:
+- Name: Imported HCP name.
+- Specialty: Imported specialty.
+- Clinic 1: Imported zone and location.
+- Clinic 1 availability: Normalized weekly schedule.
+- Clinic 2: Display only if valid data exists.
+- Quarterly target: Imported frequency.
+- Completed visits: Visit ledger.
+- Remaining visits: Calculated automatically.
+
+Never display data belonging to another HCP.
+
+Use `target_id` as the primary matching identifier.
+
+Do not merge HCPs based only on similar names.
+
+## 5.7 Safe repeated imports
+
+Support three modes:
+
+1. Add new HCPs.
+2. Update existing HCPs.
+3. Review and synchronize.
+
+Requirements:
+
+- No duplicate HCPs.
+- No duplicate clinics.
+- Preserve completed visit history.
+- Preserve verified manual corrections unless source changes are confirmed.
+- Do not erase verified values using blank Excel cells by default.
+- Highlight changed fields.
+- Maintain import history.
+- Support rollback where practical.
+
+Display a summary showing:
+
+- New HCPs.
+- Updated HCPs.
+- Unchanged HCPs.
+- Clinics detected.
+- Schedules interpreted.
+- Locations verified.
+- Records requiring confirmation.
+- Errors.
+
+---
+
+# PART 6 — QUARTERLY VISIT MANAGEMENT
+
+Interpret `Frequency per Quarter` as the number of qualifying visits required per HCP per calendar quarter.
+
+For example, a value of 8 means eight qualifying completed visits during the quarter.
+
+Do not interpret it as eight visits per week or day.
+
+## 6.1 Visit ledger
+
+Store:
+
+- Visit ID.
+- HCP ID.
+- Clinic ID.
+- Planned date.
+- Planned time.
+- Actual start and end.
+- Visit status.
+- Whether the visit qualifies toward coverage.
+- Optional appropriate professional notes.
+- Source.
+- Synchronization status.
+
+Statuses:
+
+- Planned.
+- Completed.
+- Cancelled.
+- Not completed.
+
+Only qualifying completed visits count toward coverage.
+
+## 6.2 Coverage calculation
+
+Use:
+
+`Remaining visits = max(0, quarterly target - qualifying completed visits this quarter)`
+
+Show:
+
+- Completed visits.
+- Remaining visits.
+- Quarterly target.
+- Last completed visit.
+- Overdue status.
+- Coverage risk.
+- Projected quarter-end coverage.
+
+Explain coverage-risk calculations.
+
+Do not use arbitrary scores without documenting the logic.
+
+## 6.3 Initial visit history
+
+The Excel workbook does not contain complete visit history.
+
+Provide an initial baseline workflow.
+
+Allow:
+- Historical visit import.
+- Manual completed-visit baseline.
+- Quarter selection.
+- Baseline date.
+- Incomplete-history warning.
+
+Never assume all HCPs have zero completed visits without informing the user.
+
+Never reset visit history during an Excel import.
+
+---
+
+# PART 7 — VISIT DURATION
+
+The default visit duration is **exactly 15 minutes**.
+
+Requirements:
+
+- Every new planned visit defaults to 15 minutes.
+- Newly imported HCPs receive a 15-minute default.
+- All optimization calculations use 15 minutes.
+- Display duration on HCP and route cards.
+- Allow manual HCP-level duration overrides.
+- Allow visit-specific temporary overrides.
+- Show when a duration differs from the default.
+- Allow changing the global default from Settings.
+
+Do not automatically learn or substitute durations from historical averages.
+
+Do not allow AI to change the duration automatically.
+
+If the user manually changes the default in Settings, use the new setting for future planning.
+
+Existing explicit duration overrides must be preserved.
+
+---
+
+# PART 8 — CRITICAL APPOINTMENT CONFLICT PREVENTION
+
+This requirement is mandatory.
+
+The user is one medical representative and cannot attend two appointments simultaneously.
+
+**No two planned HCP appointments may overlap.**
+
+## 8.1 Global no-overlap rule
+
+For appointments A and B:
+
+`A.start < B.end AND B.start < A.end`
+
+If this expression is true, the appointments overlap.
+
+The optimizer must prevent this during scheduling.
+
+The independent validator must reject any plan that contains an overlap.
+
+Do not simply detect overlaps after presenting an invalid plan.
+
+## 8.2 Same location, same time window
+
+If multiple HCPs share the same verified physical location, schedule them consecutively.
+
+Default transition buffer: zero minutes.
+
+Example:
+
+Clinic X:
+Available 2:00 PM–6:00 PM.
+
+HCP A: 2:00–2:15 PM.
+
+HCP B: 2:15–2:30 PM.
+
+HCP C: 2:30–2:45 PM.
+
+Do not add unnecessary road travel between verified identical locations.
+
+Recognize shared addresses and verified coordinates.
+
+Do not assume that similar zone names prove two clinics are in the same building.
+
+If locations are not verified, do not automatically group them as identical.
+
+## 8.3 Different locations
+
+When HCPs are at different clinics:
+
+`Next visit start >= Previous visit end + road travel time + required transition buffer`
+
+Use road-based travel estimates whenever available.
+
+Waiting is permitted when useful, but must be included in duty-span calculations.
+
+## 8.4 Same HCP, multiple clinics
+
+Do not schedule the same HCP at two clinics simultaneously.
+
+Do not count two clinics as two separate HCP visits by default.
+
+## 8.5 Independent validator
+
+After optimization, independently validate:
+
+- Appointment overlap.
+- Travel feasibility.
+- Clinic availability.
+- Visit duration.
+- Same-location sequential scheduling.
+- Locked appointments.
+- Duty-span limit.
+- Split-shift prohibition.
+- Duplicate qualifying visits.
+- Return-home time when enabled.
+
+Reject invalid plans and re-optimize.
+
+If a plan is infeasible, explain the actual conflict.
+
+---
+
+# PART 9 — DAILY PLANNING ENGINE
+
+Generate a feasible daily route based on:
+
+- Active HCPs.
+- Verified clinic locations.
+- Confirmed availability.
+- Quarterly coverage requirements.
+- Remaining visits.
+- Completed visit history.
+- HCP priorities.
+- 15-minute default visit duration.
+- Daily target of eight.
+- Home location.
+- Traffic-aware travel estimates.
+- Locked appointments.
+- Excluded HCPs.
+- Weekend settings.
+- Maximum duty span.
+
+## 9.1 Working hours
+
+Working hours are flexible.
+
+Do not force a fixed 9 AM–5 PM schedule.
+
+Choose a feasible start time based on HCP availability.
+
+Do not create split shifts.
+
+## 9.2 Duty span
+
+Maximum duty span: 480 minutes.
+
+Default starting point: Home.
+
+Allow configurable return-home requirement.
+
+If return-home is enabled, include return travel in the duty-span calculation.
+
+Include travel, visits, waiting, and scheduled breaks within the applicable duty period.
+
+## 9.3 Daily target
+
+Try to plan eight distinct HCP visits.
+
+Eight is a target, not permission to violate hard constraints.
+
+If fewer than eight are feasible, show the best valid plan and explain why.
+
+Never invent visits or hide infeasibility.
+
+---
+
+# PART 10 — WEEKLY PLANNING
+
+Generate a weekly plan across configured working days.
+
+Initial weekend selection:
+
+- Thursday.
+- Friday.
+- Saturday.
+
+These days must be excluded from normal weekly planning.
+
+The user may change weekend selections in Settings.
+
+The first day of the week is independently configurable and controls calendar organization, not working-day eligibility.
+
+The weekly optimizer must consider:
+
+- Quarterly coverage.
+- Overdue HCPs.
+- Clinic availability.
+- Geographic clustering.
+- Daily visit capacity.
+- Fixed appointments.
+- Completed visits.
+- Fairness.
+- Travel time.
+- Avoiding unnecessary repeat visits.
+
+Do not generate the weekly plan by simply repeating the same daily route.
+
+Show weekly totals and per-day summaries.
+
+Allow locking appointments and re-optimizing the remaining week.
+
+---
+
+# PART 11 — ROUTE OPTIMIZATION ENGINE
+
+Use a real constraint-based optimization engine.
+
+Do not rely on Gemini or any other language model to guess the best route.
+
+Use an appropriate solver such as Google OR-Tools or an equivalent constraint optimization implementation behind a replaceable interface.
+
+## 11.1 Hard constraints
+
+Must respect:
+
+- Clinic availability.
+- Visit duration.
+- No appointment overlap.
+- Travel time.
+- Maximum 480-minute duty span.
+- No split shifts.
+- Home starting point.
+- Return-home requirement when enabled.
+- Locked appointments.
+- Excluded HCPs.
+- Valid location data.
+- No accidental duplicate visits.
+- Required breaks.
+
+Hard constraints must never be overridden by soft preferences.
+
+## 11.2 Optimization objectives
+
+Consider:
+
+- Total driving time.
+- Total distance.
+- Waiting time.
+- HCP priority.
+- Quarterly coverage.
+- Overdue visits.
+- Geographic clustering.
+- Weekly workload balance.
+- Traffic robustness.
+
+Use normalized objective weights so that one metric does not dominate simply because of its numerical scale.
+
+## 11.3 Traffic-aware routing
+
+Use Google Maps Platform Routes API or another approved routing provider.
+
+Use this fallback hierarchy:
+
+1. Live traffic.
+2. Fresh cached road estimate.
+3. Older cached road estimate.
+4. Historical road estimate.
+5. Clearly labeled approximation as a last resort.
+
+Never present stale or approximate estimates as live traffic.
+
+Display data freshness.
+
+Cache route estimates efficiently.
+
+Handle API errors, quotas, and connectivity failures.
+
+## 11.4 Alternative plans
+
+Generate up to three genuinely different feasible plans.
+
+Possible strategies:
+
+- Minimize travel.
+- Improve overdue HCP coverage.
+- Reduce waiting.
+- Improve robustness.
+- Improve weekly coverage balance.
+
+Use controlled optimization diversification, not random shuffling.
+
+Deduplicate similar routes.
+
+Never deliberately produce a poor route merely to create variety.
+
+Every alternative must pass the independent validator.
+
+---
+
+# PART 12 — VISIT EXECUTION
+
+Support actual field-work recording.
+
+Allow:
+
+- Completed.
+- Cancelled.
+- Not completed.
+
+Do not mark a visit completed merely because the user opens Google Maps or arrives near a clinic.
+
+After a visit status changes:
+
+1. Update the local visit ledger.
+2. Recalculate remaining quarterly coverage.
+3. Update the remaining daily route.
+4. Re-estimate traffic where possible.
+5. Re-optimize remaining stops.
+6. Preserve completed visits and locked appointments.
+7. Explain significant changes.
+
+Provide quick actions to call an HCP, open Maps, edit availability, and record a visit when the relevant information exists.
+
+---
+
+# PART 13 — AI ASSISTANT
+
+Integrate an optional AI assistant.
+
+AI is a supporting layer, not the source of truth for route feasibility.
+
+Support commands such as:
+
+- Plan tomorrow for eight HCPs.
+- Prioritize overdue cardiologists.
+- Avoid this zone today.
+- Show three alternative routes.
+- Explain why only six visits are feasible.
+- Which HCPs are at risk of missing their quarterly target?
+- Re-optimize after cancelling my next appointment.
+
+Translate commands into validated structured parameters.
+
+Never allow AI to override hard constraints.
+
+Use structured JSON with schema validation.
+
+Do not let AI directly perform arbitrary database updates.
+
+Use AI to explain actual optimizer output, not invent route facts.
+
+Do not expose API keys in the APK.
+
+Use a secure backend for sensitive AI operations where required.
+
+Keep the application functional if the AI service is unavailable.
+
+A consumer Gemini subscription must not be assumed to cover Gemini API usage or billing.
+
+---
+
+# PART 14 — SETTINGS SCREEN
+
+Organize Settings into these sections.
+
+## Appearance
+- System (default).
+- Light.
+- Dark.
+
+## Work Schedule
+- Weekend days: Thursday, Friday, Saturday selected initially.
+- Multi-select weekday control.
+- First day of week: independently configurable.
+- Daily HCP target: 8.
+- Maximum duty span: 480 minutes.
+- Default visit duration: 15 minutes.
+- Home location.
+- Return-home requirement.
+- Split shifts: disabled.
+
+## Visit Scheduling
+- Same-location visits: Sequential.
+- Same-location transition buffer: 0 minutes.
+- Manual duration overrides: enabled.
+
+## Optimization
+- Travel importance.
+- Coverage importance.
+- HCP priority.
+- Waiting-time importance.
+- Traffic safety buffer.
+- Alternative plans.
+
+## Data and Import
+- Excel import.
+- Import history.
+- Schedule verification.
+- Historical visit baseline.
+- Backup.
+- Synchronization.
+
+## Integrations
+- Maps provider.
+- Traffic provider.
+- AI provider.
+- Cloud status.
+
+Settings must be persisted and used by the actual planning engine.
+
+Changing settings must trigger the appropriate recalculation or refresh.
+
+---
+
+# PART 15 — OFFLINE AND CLOUD SYNCHRONIZATION
+
+Use Room as the local operational database.
+
+Store:
+
+- HCPs.
+- Clinics.
+- Availability.
+- Visits.
+- Daily plans.
+- Weekly plans.
+- Settings.
+- Import logs.
+- Cached route estimates.
+
+Use WorkManager for background synchronization.
+
+Support:
+- Offline access.
+- Pending updates.
+- Retry after connectivity returns.
+- Idempotent synchronization.
+- Conflict detection.
+- Record versioning.
+- Safe migrations.
+- Clear sync status.
+
+If cloud synchronization is enabled, use authenticated Firebase Authentication and Firestore or an equivalent approved backend.
+
+Never expose service credentials in the APK.
+
+Do not silently overwrite conflicting edits.
+
+---
+
+# PART 16 — MAPS AND LOCATION
+
+Support:
+
+- Home location configuration.
+- Clinic location verification.
+- Map display.
+- Route visualization.
+- External Google Maps navigation.
+- Geocoding.
+- Traffic-aware routing.
+- Optional current-location functionality.
+
+Keep the original Maps URL.
+
+Store verified coordinates separately.
+
+Do not infer exact coordinates from vague zone names.
+
+Request location permissions only when needed.
+
+Do not continuously track the user in the background by default.
+
+---
+
+# PART 17 — SECURITY AND PRIVACY
+
+Treat HCP territory data as business-sensitive information.
+
+Implement:
+
+- Secure authentication where needed.
+- Least-privilege cloud access.
+- HTTPS.
+- Secure token storage.
+- Appropriate local data protection.
+- Safe logging.
+- User-controlled exports.
+- Clear permissions.
+- No unnecessary patient-level data.
+
+Before sending real company data to any external AI, maps, analytics, or cloud provider, verify organizational authorization and privacy requirements.
+
+Use synthetic sample data during development.
+
+---
+
+# PART 18 — ADDITIONAL RECOMMENDED FEATURES
+
+Implement these after the core functionality.
+
+## 18.1 Data quality dashboard
+
+Show:
+- Missing coordinates.
+- Unverified locations.
+- Unverified schedules.
+- Missing identifiers.
+- Duplicate records.
+- Incomplete HCP information.
+
+## 18.2 Coverage alerts
+
+Show:
+- Overdue HCPs.
+- HCPs at risk of missing quarterly targets.
+- HCPs not scheduled this week.
+- HCPs with incomplete history.
+
+Use actual data and documented rules.
+
+## 18.3 Plan progress
+
+Show:
+- Completed visits.
+- Remaining visits.
+- Next stop.
+- Estimated remaining driving time.
+- Estimated end-of-day time.
+
+Update after every visit-status change.
+
+## 18.4 Excel change detection
+
+When a revised workbook is imported, compare it with the previous import.
+
+Show:
+- New HCPs.
+- Removed or inactive HCPs.
+- Changed clinic locations.
+- Changed availability.
+- Changed frequencies.
+- Changed specialties.
+
+Never remove visit history because a row disappears from a new workbook.
+
+Require confirmation before deactivating records based on missing rows.
+
+## 18.5 Audit history
+
+Maintain a history of:
+- Imports.
+- HCP changes.
+- Clinic changes.
+- Schedule changes.
+- Manual overrides.
+- Visit status changes.
+
+---
+
+# PART 19 — TESTING AND ACCEPTANCE CRITERIA
+
+The application is not complete until the following tests pass.
+
+## UI
+1. Inter or selected font renders consistently.
+2. Arabic and English text display correctly.
+3. System theme follows Android.
+4. Light and dark themes work.
+5. No clipped or overflowing text.
+6. Navigation remains accessible on different screen sizes.
+
+## Settings
+7. Thursday, Friday, Saturday are initially selected as weekends.
+8. Weekend selection supports multiple days.
+9. First day of week is independent.
+10. Weekly planning respects weekend configuration.
+11. System theme is the default for fresh installations.
+12. Existing customized settings survive updates.
+
+## Excel
+13. Existing workbook imports without renaming columns.
+14. All ten expected fields are recognized.
+15. HCP-to-row matching is correct.
+16. Multiple clinics are supported.
+17. Schedules are normalized.
+18. Ambiguous schedules are flagged.
+19. HCP cards populate correctly.
+20. Repeated imports create no duplicates.
+21. Visit history is preserved.
+22. Blank cells do not erase verified data by default.
+
+## Visits
+23. Every standard visit lasts exactly 15 minutes.
+24. Manual duration overrides work.
+25. Quarterly coverage calculations are correct.
+26. Planned visits do not count as completed.
+
+## Optimization
+27. No appointment overlap is possible.
+28. Same-location visits are sequential.
+29. Same-location visits have zero default transition buffer.
+30. Different-location travel time is respected.
+31. Clinic availability is respected.
+32. Maximum duty span is 480 minutes.
+33. Split shifts are prohibited.
+34. Home start is respected.
+35. Return-home requirement is respected when enabled.
+36. Infeasible plans are rejected.
+37. Alternative plans are genuinely different and feasible.
+38. The independent validator catches deliberately injected conflicts.
+
+## Offline and synchronization
+39. Previously imported data is accessible offline.
+40. Plans remain viewable offline.
+41. Pending updates synchronize safely.
+42. Conflicts are handled transparently.
+
+---
+
+# PART 20 — IMPLEMENTATION PHASES
+
+Maintain a working build throughout implementation.
+
+### Phase 0 — Existing project audit
+- Inspect the current workspace.
+- Identify existing architecture.
+- Identify implemented functionality.
+- Inspect the database and migrations.
+- Inspect current theme and navigation.
+- Identify current Excel, AI, and optimizer implementations.
+- Create a phased implementation checklist.
+
+### Phase 1 — Critical scheduling correctness
+- Enforce global appointment no-overlap constraints.
+- Implement same-location sequential scheduling.
+- Apply 15-minute default visit duration.
+- Implement independent plan validation.
+- Add regression tests.
+
+### Phase 2 — Excel and AI intelligence
+- Improve workbook ingestion.
+- Implement automatic field mapping.
+- Improve schedule parsing.
+- Implement AI-assisted ambiguous interpretation.
+- Populate HCP cards correctly.
+- Implement safe repeated imports.
+- Test against the real workbook when accessible.
+
+### Phase 3 — Settings
+- Implement System/Light/Dark themes.
+- Set Thursday, Friday, Saturday as initial weekend days.
+- Add independent first-day-of-week selection.
+- Integrate all settings into the actual optimizer.
+- Preserve existing customized preferences.
+
+### Phase 4 — UI redesign
+- Replace typography.
+- Apply the new design system.
+- Redesign Planner.
+- Redesign HCP Directory.
+- Redesign Import.
+- Redesign Settings.
+- Improve responsive layouts.
+
+### Phase 5 — Planning engine
+- Improve daily planning.
+- Improve weekly coverage allocation.
+- Improve route alternatives.
+- Improve traffic-aware estimates.
+- Improve explanations and conflict handling.
+
+### Phase 6 — Visit execution and synchronization
+- Complete visit ledger.
+- Add route re-optimization.
+- Add offline behavior.
+- Add background sync.
+- Add conflict handling.
+
+### Phase 7 — AI and final quality
+- Implement natural-language commands.
+- Implement plan explanations.
+- Improve AI-assisted import.
+- Run complete regression tests.
+- Produce setup documentation.
+- Generate a release build.
+
+Do not postpone scheduling correctness and data integrity in favor of visual effects or AI features.
+
+---
+
+# PART 21 — ANTIGRAVITY EXECUTION RULES
+
+1. Inspect the existing project before editing.
+2. Preserve working functionality.
+3. Preserve existing HCP data and completed visit history.
+4. Do not rebuild from scratch.
+5. Create a clear implementation plan.
+6. Implement in phases.
+7. Compile after meaningful milestones.
+8. Run automated tests.
+9. Fix errors before proceeding.
+10. Never replace real functionality with hardcoded demo output.
+11. Never fake route calculations, traffic, AI, or synchronization.
+12. Never silently guess uncertain availability.
+13. Never display an invalid route as a valid plan.
+14. Never embed private API keys in the APK.
+15. Use replaceable interfaces for external providers.
+16. Document incomplete integrations and required credentials.
+17. Report actual test results honestly.
+18. Do not claim that an APK has been built unless the build succeeds.
+
+# PART 22 — START IMPLEMENTATION NOW
+
+Begin by auditing the existing Territory Rx project.
+
+Then:
+
+1. Identify existing features and architecture.
+2. Identify the most important risks.
+3. Create an implementation checklist.
+4. Start with scheduling conflict prevention and Excel data correctness.
+5. Implement the remaining phases in order.
+6. Compile and test throughout.
+
+At the end, provide:
+
+- Implemented features.
+- Screens modified.
+- Database changes.
+- Migration details.
+- Tests executed and results.
+- Remaining limitations.
+- Required external API credentials.
+- Build status.
+- Next recommended development steps.
+
+**FINAL OBJECTIVE**
+
+Transform Territory Rx into a reliable, modern, intelligent native Android application that understands my real HCP Excel territory, maintains accurate HCP records, tracks quarterly coverage, and generates feasible daily and weekly visit routes.
+
+The app must respect my confirmed working preferences:
+
+- System theme.
+- Thursday, Friday, Saturday weekends.
+- Configurable first day of the week.
+- Eight HCP visits per day as the default target.
+- Exactly 15 minutes per standard visit.
+- Sequential visits at the same verified location.
+- Zero-minute default transition buffer.
+- Home as starting point.
+- Maximum eight-hour duty span.
+- No split shifts.
+
+Build a real application, not just a visual prototype.

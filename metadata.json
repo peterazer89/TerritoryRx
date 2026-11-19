@@ -1,0 +1,6 @@
+{
+  "name": "TerritoryRx",
+  "description": "Constraint-based HCP territory planner, Excel importer, schedule parser, and route optimizer for medical representatives.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

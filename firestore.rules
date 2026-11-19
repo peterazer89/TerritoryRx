@@ -1,0 +1,129 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Hardened Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // 3. Entity Validation Blueprints
+    function isValidCloudHcp(data) {
+      return data.userId is string && data.userId == request.auth.uid && data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             data.targetId is string && data.targetId.size() >= 1 && data.targetId.size() <= 100 &&
+             data.name is string && data.name.size() >= 1 && data.name.size() <= 200 &&
+             data.specialty is string && data.specialty.size() >= 1 && data.specialty.size() <= 150 &&
+             data.quarterlyTarget is int && data.quarterlyTarget >= 0 && data.quarterlyTarget <= 100 &&
+             data.priorityScore is int && data.priorityScore >= 1 && data.priorityScore <= 100 &&
+             data.zone is string && data.zone.size() <= 150 &&
+             data.isActive is bool &&
+             data.version is int && data.version >= 1 && data.version <= 1000000 &&
+             data.isDeleted is bool &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    function isValidCloudVisit(data) {
+      return data.userId is string && data.userId == request.auth.uid && data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             data.hcpTargetId is string && data.hcpTargetId.size() >= 1 && data.hcpTargetId.size() <= 100 &&
+             data.clinicLabel is string && data.clinicLabel.size() >= 1 && data.clinicLabel.size() <= 150 &&
+             data.plannedDateIso is string && data.plannedDateIso.size() >= 8 && data.plannedDateIso.size() <= 40 &&
+             data.status is string && data.status in ['PLANNED', 'COMPLETED', 'CANCELLED', 'NOT_COMPLETED'] &&
+             data.qualifiesForCoverage is bool &&
+             data.notes is string && data.notes.size() <= 500 &&
+             data.version is int && data.version >= 1 && data.version <= 1000000 &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    // 4. Collection Rules: Synchronized HCPs
+    match /users/{userId}/hcps/{hcpId} {
+      allow get: if isSignedIn() && isValidId(userId) && isValidId(hcpId) &&
+                    request.auth.uid == userId;
+
+      allow list: if isSignedIn() && isValidId(userId) &&
+                     request.auth.uid == userId && existing().userId == request.auth.uid;
+
+      allow create: if isSignedIn() && isValidId(userId) && isValidId(hcpId) &&
+                       request.auth.uid == userId &&
+                       incoming().keys().hasAll([
+                         'userId', 'targetId', 'name', 'specialty', 'quarterlyTarget',
+                         'priorityScore', 'zone', 'isActive', 'version', 'isDeleted',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'userId', 'targetId', 'name', 'specialty', 'quarterlyTarget',
+                         'priorityScore', 'zone', 'isActive', 'version', 'isDeleted',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidCloudHcp(incoming());
+
+      allow update: if isSignedIn() && isValidId(userId) && isValidId(hcpId) &&
+                       request.auth.uid == userId &&
+                       isValidCloudHcp(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().version >= existing().version &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'targetId', 'name', 'specialty', 'quarterlyTarget',
+                         'priorityScore', 'zone', 'isActive', 'version', 'isDeleted', 'updatedAt'
+                       ]);
+
+      allow delete: if isSignedIn() && isValidId(userId) && isValidId(hcpId) &&
+                       request.auth.uid == userId && existing().userId == request.auth.uid;
+    }
+
+    // 5. Collection Rules: Synchronized Visits
+    match /users/{userId}/visits/{visitId} {
+      allow get: if isSignedIn() && isValidId(userId) && isValidId(visitId) &&
+                    request.auth.uid == userId;
+
+      allow list: if isSignedIn() && isValidId(userId) &&
+                     request.auth.uid == userId && existing().userId == request.auth.uid;
+
+      allow create: if isSignedIn() && isValidId(userId) && isValidId(visitId) &&
+                       request.auth.uid == userId &&
+                       incoming().keys().hasAll([
+                         'userId', 'hcpTargetId', 'clinicLabel', 'plannedDateIso',
+                         'status', 'qualifiesForCoverage', 'notes', 'version',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'userId', 'hcpTargetId', 'clinicLabel', 'plannedDateIso',
+                         'status', 'qualifiesForCoverage', 'notes', 'version',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidCloudVisit(incoming());
+
+      allow update: if isSignedIn() && isValidId(userId) && isValidId(visitId) &&
+                       request.auth.uid == userId &&
+                       isValidCloudVisit(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().version >= existing().version &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'hcpTargetId', 'clinicLabel', 'plannedDateIso',
+                         'status', 'qualifiesForCoverage', 'notes', 'version', 'updatedAt'
+                       ]);
+
+      allow delete: if isSignedIn() && isValidId(userId) && isValidId(visitId) &&
+                       request.auth.uid == userId && resource != null && existing().userId == request.auth.uid;
+    }
+  }
+}

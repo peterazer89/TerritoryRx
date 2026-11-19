@@ -1,0 +1,147 @@
+{
+  "entities": {
+    "CloudHcp": {
+      "title": "CloudHcp",
+      "description": "Synchronized HCP territory record scoped to an authenticated medical representative.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of the authenticated owner."
+        },
+        "targetId": {
+          "type": "string",
+          "description": "External workbook target_id of the HCP."
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the HCP."
+        },
+        "specialty": {
+          "type": "string",
+          "description": "Medical specialty of the HCP."
+        },
+        "quarterlyTarget": {
+          "type": "integer",
+          "description": "Required qualifying visits per quarter."
+        },
+        "priorityScore": {
+          "type": "integer",
+          "description": "Priority score from 1 to 100."
+        },
+        "zone": {
+          "type": "string",
+          "description": "Primary clinic zone or territory area."
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Whether the HCP is active in territory planning."
+        },
+        "version": {
+          "type": "integer",
+          "description": "Monotonic record version for conflict detection."
+        },
+        "isDeleted": {
+          "type": "boolean",
+          "description": "Soft deletion marker for idempotent synchronization."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation server timestamp (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update server timestamp (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "targetId",
+        "name",
+        "specialty",
+        "quarterlyTarget",
+        "priorityScore",
+        "zone",
+        "isActive",
+        "version",
+        "isDeleted",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CloudVisit": {
+      "title": "CloudVisit",
+      "description": "Synchronized HCP visit ledger record scoped to an authenticated medical representative.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID of the authenticated owner."
+        },
+        "hcpTargetId": {
+          "type": "string",
+          "description": "External target_id of the visited HCP."
+        },
+        "clinicLabel": {
+          "type": "string",
+          "description": "Clinic label where the visit is scheduled or completed."
+        },
+        "plannedDateIso": {
+          "type": "string",
+          "description": "ISO date of the visit (YYYY-MM-DD)."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PLANNED", "COMPLETED", "CANCELLED", "NOT_COMPLETED"],
+          "description": "Visit execution status."
+        },
+        "qualifiesForCoverage": {
+          "type": "boolean",
+          "description": "Whether this visit counts toward quarterly coverage when completed."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Professional field planning notes."
+        },
+        "version": {
+          "type": "integer",
+          "description": "Monotonic record version for conflict detection."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation server timestamp (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update server timestamp (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "hcpTargetId",
+        "clinicLabel",
+        "plannedDateIso",
+        "status",
+        "qualifiesForCoverage",
+        "notes",
+        "version",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/hcps/{hcpId}": {
+      "schema": "CloudHcp",
+      "description": "Per-user synchronized HCP territory records."
+    },
+    "/users/{userId}/visits/{visitId}": {
+      "schema": "CloudVisit",
+      "description": "Per-user synchronized HCP visit ledger records."
+    }
+  }
+}
